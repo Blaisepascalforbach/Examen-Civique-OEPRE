@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1f3a93">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Examen civique · CSP · Révision</title>
+<style>
+  :root { --bleu:#1f3a93; --bleu-clair:#e8edf8; --fond:#f4f6fa; --texte:#1c2433; --vert:#2e7d32; --vert-clair:#eaf5ea; --orange:#9a5000; --orange-clair:#fff3e3; --gris:#5a6375; --bord:#d9dfeb; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans","Noto Sans Arabic",sans-serif; background:var(--fond); color:var(--texte); font-size:20px; line-height:1.6; }
+  header { background:var(--bleu); color:#fff; padding:20px 24px; }
+  header .kicker { font-size:14px; letter-spacing:.06em; text-transform:uppercase; opacity:.85; }
+  header h1 { margin:4px 0 0; font-size:24px; font-weight:650; }
+  main { max-width:780px; margin:0 auto; padding:24px 20px 40px; }
+  .card { background:#fff; border:1px solid var(--bord); border-radius:14px; padding:24px; margin-bottom:18px; }
+  .card h2 { margin:0 0 10px; font-size:19px; }
+  .note { background:var(--orange-clair); border:1px solid #f0c98f; color:var(--orange); border-radius:10px; padding:14px 16px; font-size:16px; margin-bottom:18px; }
+  .info { background:#eef3ff; border:1px solid #b8c8f0; color:var(--bleu); border-radius:10px; padding:14px 16px; font-size:16px; margin-bottom:18px; }
+  .btn { font:inherit; font-size:17px; border:none; border-radius:10px; padding:12px 18px; cursor:pointer; background:var(--bleu); color:#fff; min-height:48px; margin:4px 8px 4px 0; }
+  .btn:hover { filter:brightness(1.08); }
+  .btn:focus-visible, .theme:focus-visible, select:focus-visible, textarea:focus-visible { outline:3px solid #7aa2f7; outline-offset:2px; }
+  .btn.sec { background:var(--bleu-clair); color:var(--bleu); }
+  .btn:disabled { opacity:.4; cursor:default; }
+  .btn.discret { background:transparent; color:var(--gris); text-decoration:underline; }
+  .btn.audio { background:#fff; color:var(--bleu); border:2px solid var(--bleu); }
+  .picto { font-size:20px; margin-inline-end:6px; }
+  .theme { display:flex; justify-content:space-between; align-items:center; gap:16px; width:100%; text-align:start; background:#fff; color:var(--texte); border:1px solid var(--bord); border-radius:12px; padding:16px 18px; margin-bottom:10px; cursor:pointer; font:inherit; }
+  .theme:hover { border-color:var(--bleu); }
+  .theme .titre { font-weight:600; font-size:18px; }
+  .theme .sous { color:var(--gris); font-size:15px; display:block; margin-top:2px; }
+  .barre { height:8px; background:#e3e8f2; border-radius:6px; overflow:hidden; margin:8px 0 4px; }
+  .barre > div { height:100%; background:var(--vert); width:0; transition:width .3s; }
+  .gris { color:var(--gris); font-size:15px; }
+  .repere { font-size:14px; color:var(--gris); text-transform:uppercase; letter-spacing:.05em; margin-bottom:6px; }
+  .question { font-size:23px; font-weight:600; margin:4px 0 18px; line-height:1.4; }
+  .reponse { background:var(--vert-clair); border-inline-start:5px solid var(--vert); border-radius:10px; padding:16px 18px; }
+  .reponse .label { font-size:14px; text-transform:uppercase; letter-spacing:.05em; color:var(--vert); margin-bottom:4px; }
+  .alerte { display:inline-block; background:var(--orange-clair); color:var(--orange); border:1px solid #f0c98f; border-radius:8px; padding:3px 10px; font-size:14px; margin-top:10px; }
+  .nav { display:flex; flex-wrap:wrap; gap:4px; align-items:center; justify-content:space-between; }
+  .clavier { color:var(--gris); font-size:14px; margin-top:10px; }
+  @media (hover:none) { .clavier { display:none; } }
+  .langue { display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+  select { font:inherit; font-size:17px; padding:8px 12px; border-radius:10px; border:1px solid var(--bord); background:#fff; }
+  textarea { font:inherit; font-size:16px; padding:10px; border:1px solid var(--bord); border-radius:10px; width:100%; }
+  .pied { color:var(--gris); font-size:14px; margin-top:28px; border-top:1px solid var(--bord); padding-top:14px; }
+  [dir="rtl"] .theme .titre, [dir="rtl"] .question { text-align:right; }
+</style>
+</head>
+<body>
+<header>
+  <div class="kicker" id="t-kicker"></div>
+  <h1 id="t-title"></h1>
+</header>
+<main>
+  <div class="langue">
+    <label for="lang" class="gris" id="t-lang"></label>
+    <select id="lang">
+      <option value="fr">Français</option>
+      <option value="ar">العربية</option>
+      <option value="tr">Türkçe</option>
+      <option value="uk">Українська</option>
+      <option value="sq">Shqip</option>
+      <option value="ka">ქართული</option>
+      <option value="ps">پښتو</option>
+      <option value="fa">دری</option>
+      <option value="ru">Русский</option>
+      <option value="en">English</option>
+      <option value="ta">தமிழ்</option>
+    </select>
+  </div>
+  <div class="note" id="t-note"></div>
+  <div class="info" id="t-avert" style="display:none"></div>
+  <div id="app"></div>
+  <div class="card" id="retours">
+    <h2><span class="picto" aria-hidden="true">📝</span><span id="t-rem"></span></h2>
+    <textarea id="remarques" rows="6"></textarea>
+    <div style="margin-top:10px"><button class="btn" id="telecharger"><span class="picto" aria-hidden="true">💾</span><span id="t-tel"></span></button></div>
+  </div>
+  <div class="pied" id="t-pied"></div>
+</main>
+
+<script>
+const DATA = [{"titre": "Principes et valeurs de la République", "id": "principes-et-valeurs-de-la-r-publique", "questions": [{"q": "À quoi correspond la date du 14 juillet ?", "r": "la fête nationale (commémoration de la prise de la Bastille, 1789)", "incertain": false}, {"q": "Quel est l'un des symboles de la République française ?", "r": "la Marianne (ou le drapeau tricolore)", "incertain": false}, {"q": "Le principe d'égalité signifie que :", "r": "tous les citoyens sont égaux devant la loi", "incertain": false}, {"q": "« Liberté, égalité, fraternité », c'est :", "r": "la devise de la République", "incertain": false}, {"q": "A-t-on le droit d'insulter publiquement quelqu'un parce qu'il est différent ?", "r": "non", "incertain": false}, {"q": "Certains métiers peuvent-ils être réservés aux hommes ?", "r": "non", "incertain": false}, {"q": "De quand date la Constitution de la Ve République ?", "r": "1958", "incertain": false}, {"q": "Le régime de la France est :", "r": "une République", "incertain": false}, {"q": "Lequel de ces symboles représente officiellement la République française ?", "r": "le drapeau tricolore", "incertain": true}, {"q": "Où peut-on voir la devise de la République ?", "r": "sur les bâtiments publics et les documents officiels", "incertain": false}, {"q": "Quels sont des symboles officiels de la République française ?", "r": "le drapeau tricolore, la Marianne, l'hymne national", "incertain": true}, {"q": "Qu'est-ce que l'égalité ?", "r": "tous les citoyens ont les mêmes droits et devoirs", "incertain": false}, {"q": "Que signifie la liberté ?", "r": "pouvoir faire tout ce qui ne nuit pas à autrui", "incertain": false}, {"q": "Que signifie le mot « fraternité » dans la devise française ?", "r": "la solidarité entre les citoyens", "incertain": false}, {"q": "Quel animal est un symbole de la France ?", "r": "le coq", "incertain": false}, {"q": "Quel est l'un des rôles des associations ?", "r": "rassembler des personnes autour d'un projet commun", "incertain": false}, {"q": "Quel est le nom de l'hymne national ?", "r": "La Marseillaise", "incertain": false}, {"q": "Quel symbole de la République française est tricolore ?", "r": "le drapeau", "incertain": false}, {"q": "Quelle est la date de la fête nationale française ?", "r": "le 14 juillet", "incertain": false}, {"q": "Quelle est la devise de la République française ?", "r": "Liberté, Égalité, Fraternité", "incertain": false}, {"q": "Quelle est la langue officielle de la République française ?", "r": "le français", "incertain": false}, {"q": "Quelle est la place de la langue française dans la République ?", "r": "c'est la langue de la République (article 2 de la Constitution)", "incertain": true}, {"q": "Quelle liberté permet à chacun d'exprimer ses idées ?", "r": "la liberté d'expression", "incertain": false}, {"q": "Quelle proposition est correcte ? La liberté d'expression :", "r": "permet de dire et d'écrire ses opinions, dans le respect de la loi", "incertain": true}, {"q": "Quelles sont les couleurs du drapeau français ?", "r": "bleu, blanc, rouge", "incertain": false}, {"q": "Qu'est-ce que la Marseillaise ?", "r": "l'hymne national", "incertain": false}, {"q": "Qu'est-ce qui est traditionnellement organisé sur les Champs-Élysées le 14 juillet ?", "r": "le défilé militaire", "incertain": false}, {"q": "Qui est Marianne ?", "r": "le symbole de la République", "incertain": false}, {"q": "Une personne peut-elle changer librement de religion ?", "r": "oui", "incertain": false}, {"q": "Compléter : « La France est une République indivisible, ..., démocratique et sociale »", "r": "laïque", "incertain": false}, {"q": "En quelle année la loi de séparation des Églises et de l'État a-t-elle été votée ?", "r": "1905", "incertain": false}, {"q": "Que permet le principe de laïcité ?", "r": "la liberté de conscience et l'égalité de tous, quelle que soit la religion", "incertain": true}, {"q": "Quel droit est garanti par la laïcité ?", "r": "la liberté de conscience", "incertain": false}, {"q": "Pourquoi le principe de laïcité doit-il être respecté à l'école ?", "r": "pour que chaque élève soit traité de la même façon et puisse apprendre librement", "incertain": true}, {"q": "Qu'est-ce que la laïcité ?", "r": "la séparation de l'État et des religions, avec la neutralité de l'État", "incertain": false}, {"q": "Un enfant peut-il refuser d'aller à l'école pour une raison religieuse ?", "r": "non", "incertain": false}, {"q": "Une personne a-t-elle le droit de ne pas croire en une religion ?", "r": "oui", "incertain": false}]}, {"titre": "Système institutionnel et politique", "id": "syst-me-institutionnel-et-politique", "questions": [{"q": "Qui nomme le Premier ministre ?", "r": "le président de la République", "incertain": false}, {"q": "Le Parlement est composé :", "r": "de l'Assemblée nationale et du Sénat", "incertain": false}, {"q": "Qu'est-ce que le pouvoir exécutif ?", "r": "le gouvernement (le président et les ministres)", "incertain": false}, {"q": "Les dirigeants sont élus par les citoyens dans :", "r": "des élections", "incertain": true}, {"q": "A-t-on le droit de ne pas respecter une loi ?", "r": "non", "incertain": false}, {"q": "Qui doit respecter la loi ?", "r": "tout le monde", "incertain": false}, {"q": "Quel est le rôle de l'autorité judiciaire ?", "r": "rendre la justice", "incertain": false}, {"q": "Quel pouvoir détient un juge ?", "r": "le pouvoir judiciaire", "incertain": false}, {"q": "L'autorité judiciaire est exercée par :", "r": "les juges (les tribunaux)", "incertain": false}, {"q": "Que se passe-t-il si un ministre ne respecte pas la loi ?", "r": "il peut être sanctionné", "incertain": true}, {"q": "Qui est élu lors des élections législatives ?", "r": "les députés", "incertain": false}, {"q": "Combien de députés composent l'Assemblée nationale ?", "r": "577", "incertain": false}, {"q": "Quand sont élus les sénateurs ?", "r": "pour 6 ans, renouvelés par moitié tous les 3 ans", "incertain": true}, {"q": "Qui est élu lors des élections municipales ?", "r": "les conseillers municipaux (et le maire)", "incertain": false}, {"q": "Qui est élu lors des élections présidentielles ?", "r": "le président de la République", "incertain": false}, {"q": "À partir de quel âge a-t-on le droit de voter ?", "r": "18 ans", "incertain": false}, {"q": "Pour combien de temps est élu le président de la République ?", "r": "5 ans", "incertain": false}, {"q": "Pour combien de temps sont élus les députés ?", "r": "5 ans", "incertain": false}, {"q": "Pour combien de temps sont élus les sénateurs ?", "r": "6 ans", "incertain": false}, {"q": "Qui possède le pouvoir exécutif ?", "r": "le président et le gouvernement", "incertain": false}, {"q": "Quelle condition est nécessaire pour voter aux élections ?", "r": "être de nationalité française, majeur et inscrit sur les listes électorales", "incertain": false}, {"q": "Qui peut voter aux élections en France ?", "r": "les citoyens français majeurs inscrits sur les listes électorales", "incertain": false}, {"q": "Que signifie « suffrage universel » ?", "r": "tous les citoyens peuvent voter", "incertain": false}, {"q": "Concernant les partis politiques, quelle proposition est correcte ?", "r": "ils sont libres de se former", "incertain": true}, {"q": "Quel est le rôle des députés ?", "r": "voter les lois", "incertain": false}, {"q": "Quels sont les trois pouvoirs de la séparation des pouvoirs ?", "r": "législatif, exécutif, judiciaire", "incertain": false}, {"q": "Qui possède le pouvoir législatif ?", "r": "le Parlement", "incertain": false}, {"q": "Qui sanctionne l'auteur d'un vol ?", "r": "la justice (le juge)", "incertain": false}, {"q": "Qui élit les députés ?", "r": "les citoyens", "incertain": false}, {"q": "Qui vote les lois ?", "r": "le Parlement", "incertain": false}, {"q": "Qui réside au palais de l'Élysée ?", "r": "le président de la République", "incertain": false}, {"q": "Combien y a-t-il de départements en France ?", "r": "101", "incertain": false}, {"q": "Qui représente l'État dans un département ?", "r": "le préfet", "incertain": false}, {"q": "Qui dirige la commune ?", "r": "le maire", "incertain": false}, {"q": "Est-ce que le président de la République a tous les pouvoirs ?", "r": "non", "incertain": false}, {"q": "Qui est le préfet ?", "r": "le représentant de l'État dans le département", "incertain": false}, {"q": "Quel est le rôle du Parlement ?", "r": "voter les lois et contrôler le gouvernement", "incertain": false}, {"q": "Quel est le régime politique de la France aujourd'hui ?", "r": "une République (démocratique, parlementaire)", "incertain": false}, {"q": "Combien d'États font partie de l'Union européenne au 1er janvier 2025 ?", "r": "27", "incertain": false}, {"q": "Quel État n'est pas membre de l'Union européenne ?", "r": "la Suisse", "incertain": true}, {"q": "Quelle condition est nécessaire pour voter aux élections européennes ?", "r": "être citoyen d'un État membre de l'Union européenne", "incertain": true}, {"q": "À quelle fréquence les élections européennes sont-elles organisées ?", "r": "tous les 5 ans", "incertain": false}, {"q": "Quel pays est un pays fondateur de l'Union européenne ?", "r": "la France (ou l'Allemagne)", "incertain": true}, {"q": "Quelle est la monnaie utilisée en France ?", "r": "l'euro", "incertain": false}, {"q": "Qui élit les députés européens ?", "r": "les citoyens de l'Union européenne", "incertain": false}, {"q": "Quand célèbre-t-on la journée de l'Europe ?", "r": "le 9 mai", "incertain": false}]}, {"titre": "Droits et devoirs", "id": "droits-et-devoirs", "questions": [{"q": "Comment s'appelle la Constitution actuelle de la France ?", "r": "la Constitution de la Ve République (1958)", "incertain": false}, {"q": "Comment s'appelle le texte qui énonce les droits et devoirs des personnes résidant en France ?", "r": "la Déclaration des droits de l'homme et du citoyen", "incertain": true}, {"q": "Concernant les droits individuels, quelle proposition est correcte ?", "r": "chacun peut exprimer ses opinions", "incertain": true}, {"q": "De quelle année date la Déclaration des droits de l'homme et du citoyen ?", "r": "1789", "incertain": false}, {"q": "Lequel de ces droits est un droit fondamental ?", "r": "la liberté de conscience", "incertain": true}, {"q": "Parmi ces textes, lequel garantit les droits et libertés en France ?", "r": "la Constitution", "incertain": true}, {"q": "Qu'est-ce que la liberté d'expression ?", "r": "le droit d'exprimer ses idées", "incertain": false}, {"q": "Quel droit permet à une personne de se défendre devant la justice ?", "r": "les droits de la défense", "incertain": false}, {"q": "Quel est le texte fondateur établissant les droits et devoirs de chaque citoyen ?", "r": "la Déclaration des droits de l'homme et du citoyen", "incertain": false}, {"q": "Quel texte a été adopté pendant la Révolution française ?", "r": "la Déclaration des droits de l'homme et du citoyen", "incertain": false}, {"q": "Quelle liberté permet à une personne de ne pas avoir de religion ?", "r": "la liberté de conscience", "incertain": false}, {"q": "Une femme peut avorter :", "r": "dans les conditions prévues par la loi (IVG)", "incertain": true}, {"q": "Est-il toujours possible de divorcer ?", "r": "oui", "incertain": false}, {"q": "La peine de mort est :", "r": "interdite (abolie)", "incertain": false}, {"q": "Concernant les limites aux libertés individuelles, quelle proposition est correcte ?", "r": "elles sont limitées par la loi et les droits d'autrui", "incertain": true}, {"q": "En France, est-ce légal d'être marié à plusieurs personnes en même temps ?", "r": "non", "incertain": false}, {"q": "Faut-il réduire ses déchets ?", "r": "oui", "incertain": false}, {"q": "Jeter une bouteille dans la rue est :", "r": "interdit (une infraction)", "incertain": false}, {"q": "Pourquoi les libertés individuelles peuvent-elles être limitées ?", "r": "pour protéger l'ordre public et les droits d'autrui", "incertain": false}, {"q": "Que doit faire une personne en cas d'accident ?", "r": "porter secours et appeler les secours", "incertain": false}, {"q": "Que permet la citoyenneté française ?", "r": "participer à la vie politique (voter, être élu)", "incertain": true}, {"q": "Que risque une personne qui ne respecte pas la loi ?", "r": "une sanction (amende ou peine)", "incertain": false}, {"q": "Quel est le rôle de la gendarmerie ?", "r": "assurer la sécurité publique", "incertain": false}, {"q": "Quel est le rôle de la police ?", "r": "assurer l'ordre et la sécurité publique", "incertain": false}, {"q": "Qu'est-ce qu'une infraction ?", "r": "un acte interdit par la loi et puni par une sanction", "incertain": false}, {"q": "Comment peut-on réduire ses déchets ?", "r": "trier, composter, limiter les emballages", "incertain": false}, {"q": "Déposer une machine à laver cassée sur le trottoir est :", "r": "interdit", "incertain": false}, {"q": "En quoi consiste la traite des êtres humains ?", "r": "exploiter des personnes par la contrainte (travail forcé, exploitation sexuelle)", "incertain": false}, {"q": "Que doit faire une victime de violences ?", "r": "porter plainte ou alerter la police ou la gendarmerie", "incertain": false}, {"q": "Quelle est l'infraction la plus grave ?", "r": "le crime", "incertain": false}]}, {"titre": "Histoire, géographie et culture", "id": "histoire-g-ographie-et-culture", "questions": [{"q": "En quelle année a débuté la Révolution française ?", "r": "1789", "incertain": false}, {"q": "Qui était Napoléon Ier ?", "r": "empereur des Français", "incertain": false}, {"q": "Lequel de ces personnages historiques est français ?", "r": "Jeanne d'Arc", "incertain": true}, {"q": "Dans quelle République est-on aujourd'hui ?", "r": "la Ve République", "incertain": false}, {"q": "Qu'est-ce que la Shoah ?", "r": "le génocide des juifs pendant la Seconde Guerre mondiale", "incertain": false}, {"q": "Quel pays ou région du monde a été colonisé par la France ?", "r": "l'Algérie", "incertain": true}, {"q": "Qui a rendu l'école gratuite, laïque et obligatoire ?", "r": "Jules Ferry", "incertain": false}, {"q": "Quand a eu lieu la Seconde Guerre mondiale ?", "r": "1939-1945", "incertain": false}, {"q": "Quand a eu lieu la Première Guerre mondiale ?", "r": "1914-1918", "incertain": false}, {"q": "En quelle année a été créée la Communauté économique européenne (CEE) ?", "r": "1957", "incertain": false}, {"q": "Le 11 novembre est un jour férié. À quoi correspond cette date ?", "r": "l'armistice de 1918 (fin de la Première Guerre mondiale)", "incertain": false}, {"q": "Qui a été le premier président élu sous la Ve République ?", "r": "Charles de Gaulle", "incertain": true}, {"q": "En quelle année l'esclavage a-t-il été aboli définitivement en France ?", "r": "1848", "incertain": false}, {"q": "Depuis quelle année l'école publique est-elle gratuite ?", "r": "1881", "incertain": false}, {"q": "Combien y a-t-il eu de républiques en France ?", "r": "5", "incertain": false}, {"q": "Qui était le roi de France au moment de la Révolution française ?", "r": "Louis XVI", "incertain": false}, {"q": "Qui a fondé la Ve République ?", "r": "Charles de Gaulle", "incertain": false}, {"q": "Que célèbre-t-on le 14 juillet ?", "r": "la prise de la Bastille et la fête nationale", "incertain": false}, {"q": "Quelle guerre a eu lieu entre 1914 et 1918 ?", "r": "la Première Guerre mondiale", "incertain": false}, {"q": "Pourquoi l'année 1958 est-elle importante pour la France ?", "r": "l'instauration de la Ve République", "incertain": false}, {"q": "Quel fleuve coule en France ?", "r": "la Loire (ou la Seine)", "incertain": true}, {"q": "Quelle ville est française ?", "r": "incertain, à compléter selon le choix proposé", "incertain": false}, {"q": "Quel océan borde la côte ouest française ?", "r": "l'océan Atlantique", "incertain": false}, {"q": "Qu'est-ce que Paris ?", "r": "la capitale de la France", "incertain": false}, {"q": "Quelle est la capitale de la France ?", "r": "Paris", "incertain": false}, {"q": "Sur quel continent se situe la France métropolitaine ?", "r": "l'Europe", "incertain": false}, {"q": "Quelle île est un département d'outre-mer français ?", "r": "la Martinique (ou la Guadeloupe, la Réunion)", "incertain": true}, {"q": "Combien y a-t-il de régions en France métropolitaine ?", "r": "13", "incertain": false}, {"q": "Quelle ville est un grand port maritime ?", "r": "Marseille (ou Le Havre)", "incertain": true}, {"q": "Quelle est la mer au sud de la France métropolitaine ?", "r": "la Méditerranée", "incertain": false}, {"q": "Quelle ville est située au bord de la mer Méditerranée ?", "r": "Marseille (ou Nice)", "incertain": true}, {"q": "Où se situe la Corse ?", "r": "en mer Méditerranée", "incertain": false}, {"q": "Quelle chaîne de montagnes est située entre la France et l'Italie ?", "r": "les Alpes", "incertain": false}, {"q": "Qui était Molière ?", "r": "un dramaturge (auteur de théâtre)", "incertain": false}, {"q": "Qui était Charles Baudelaire ?", "r": "un poète", "incertain": false}, {"q": "Qui était George Sand ?", "r": "une romancière", "incertain": false}, {"q": "Qui était Simone de Beauvoir ?", "r": "une philosophe et écrivaine féministe", "incertain": false}, {"q": "Qui était Albert Camus ?", "r": "un écrivain et philosophe", "incertain": false}, {"q": "Qui était Paul Cézanne ?", "r": "un peintre", "incertain": false}, {"q": "Qui était Marc Chagall ?", "r": "un peintre", "incertain": false}, {"q": "Qui était Joséphine Baker ?", "r": "une artiste (danseuse et chanteuse)", "incertain": false}, {"q": "Qui était une chanteuse française célèbre ?", "r": "incertain, à compléter selon le choix proposé (ex. Édith Piaf)", "incertain": false}, {"q": "Qu'est-ce que le Louvre ?", "r": "un musée", "incertain": false}, {"q": "Qui était Jean de La Fontaine ?", "r": "un fabuliste (poète)", "incertain": false}, {"q": "Quel écrivain est français ?", "r": "incertain, à compléter selon le choix proposé", "incertain": false}, {"q": "Dans quelle ville se trouve la tour Eiffel ?", "r": "Paris", "incertain": false}, {"q": "Quand célèbre-t-on Noël ?", "r": "le 25 décembre", "incertain": false}]}, {"titre": "Vivre dans la société française", "id": "vivre-dans-la-soci-t-fran-aise", "questions": [{"q": "Quel numéro d'urgence permet d'appeler le SAMU ?", "r": "15", "incertain": false}, {"q": "Quel numéro d'urgence permet d'appeler les pompiers ?", "r": "18", "incertain": false}, {"q": "Après avoir obtenu le permis de conduire, que faut-il faire pour conduire sa voiture ?", "r": "faire immatriculer le véhicule", "incertain": true}, {"q": "À quelles conditions un mariage est-il reconnu juridiquement ?", "r": "célébré par l'officier d'état civil de la mairie", "incertain": false}, {"q": "Quand faut-il déclarer son enfant au service d'état civil de la mairie ?", "r": "dans les 3 jours suivant la naissance", "incertain": false}, {"q": "Le travail non déclaré est :", "r": "interdit (illégal)", "incertain": false}, {"q": "Que doit faire un employeur pour fixer un salaire ?", "r": "respecter le SMIC et la convention collective", "incertain": true}, {"q": "Qu'est-ce que le SMIC ?", "r": "le salaire minimum", "incertain": false}, {"q": "Quelle est la première démarche à réaliser pour chercher un emploi ?", "r": "s'inscrire à France Travail", "incertain": true}, {"q": "Quelle est la durée légale du temps de travail par semaine ?", "r": "35 heures", "incertain": false}, {"q": "Qui est aidé par France Travail ?", "r": "les demandeurs d'emploi", "incertain": false}, {"q": "Une personne étrangère en situation régulière peut créer son entreprise :", "r": "oui", "incertain": false}, {"q": "Une femme peut-elle créer son entreprise ?", "r": "oui", "incertain": false}, {"q": "À partir de quel âge un mineur peut-il travailler ?", "r": "16 ans (en général)", "incertain": true}, {"q": "Auprès de quel organisme faut-il demander le remboursement des frais de santé ?", "r": "l'Assurance maladie", "incertain": false}, {"q": "Qu'est-ce qu'un numéro d'urgence ?", "r": "un numéro gratuit pour appeler les secours", "incertain": false}, {"q": "Concernant l'accès aux soins, quelle proposition est correcte ?", "r": "tout le monde peut se soigner, grâce à la Sécurité sociale", "incertain": true}, {"q": "En cas de problème de santé non urgent, à qui faut-il s'adresser en premier ?", "r": "le médecin traitant", "incertain": false}, {"q": "Quel est le rôle du médecin traitant ?", "r": "suivre le patient et l'orienter", "incertain": false}, {"q": "Dans quelles situations doit-on se rendre aux urgences de l'hôpital ?", "r": "en cas de danger vital", "incertain": false}, {"q": "Quel est l'objectif des vaccinations obligatoires ?", "r": "protéger la santé publique", "incertain": false}, {"q": "À quoi sert la carte Vitale ?", "r": "prouver ses droits à l'assurance maladie", "incertain": false}, {"q": "À quoi sert une mutuelle santé ?", "r": "rembourser une partie des frais de santé non couverts par la Sécurité sociale", "incertain": false}, {"q": "Jusqu'à quel âge l'école est-elle obligatoire ?", "r": "16 ans", "incertain": false}, {"q": "L'autorité parentale prévoit l'obligation :", "r": "d'assurer l'éducation et la scolarisation de l'enfant", "incertain": true}, {"q": "Pour qui l'école est-elle obligatoire ?", "r": "tous les enfants de 3 à 16 ans", "incertain": false}, {"q": "Quel diplôme obtient-on à la fin du lycée ?", "r": "le baccalauréat", "incertain": false}, {"q": "Dans quels établissements vont les élèves après l'école élémentaire ?", "r": "le collège", "incertain": false}, {"q": "Pour qui l'école est-elle obligatoire ?", "r": "tous les enfants de 3 à 16 ans", "incertain": false}, {"q": "Un enfant inscrit à l'école :", "r": "doit suivre les cours régulièrement", "incertain": true}, {"q": "Les enfants qui ne parlent pas français :", "r": "peuvent suivre des cours de français (classe UPE2A)", "incertain": true}]}];
+
+const I = {
+  fr: { kicker:"Révision hors connexion · version de test", title:"Examen civique · Carte de séjour pluriannuelle (CSP)", lang:"Langue", note:"Outil de révision, ce n'est pas un corrigé officiel. Les propositions doivent être validées par un formateur.", avert:"", prog:"Progression", parc:"parcourues", reset:"Réinitialiser la progression", resetQ:"Effacer la progression de cette révision sur cet appareil ?", voir:"Voir la proposition", prop:"Proposition à vérifier", conf:"À confirmer par un formateur", ecQ:"Écouter la question", ecR:"Écouter la proposition", prec:"Précédente", suiv:"Suivante", themes:"Retour aux thèmes", clav:"Raccourcis : ← et → pour naviguer, Entrée pour voir la proposition.", rem:"Remarques de la séance de test", remH:"Notez ici ce qui est clair, ce qui gêne, ce qui manque.", tel:"Télécharger les remarques", pied:"Questions : liste officielle publiée par le ministère de l'Intérieur (formation-civique.interieur.gouv.fr). Propositions de réponses : rédigées pour la révision, non validées." },
+  ar: { kicker:"مراجعة دون اتصال · نسخة تجريبية", title:"الامتحان المدني · بطاقة الإقامة متعددة السنوات", lang:"اللغة", note:"أداة مراجعة، وليست تصحيحاً رسمياً. يجب أن يتحقق المدرّب من الاقتراحات.", avert:"ترجمة مقترحة تحتاج إلى مراجعة من متحدث أصلي. الأسئلة تبقى بالفرنسية (القائمة الرسمية).", prog:"التقدم", parc:"تمت مراجعتها", reset:"إعادة ضبط التقدم", resetQ:"هل تريد مسح تقدم المراجعة على هذا الجهاز؟", voir:"عرض الاقتراح", prop:"اقتراح للتحقق", conf:"يؤكده المدرّب", ecQ:"استمع إلى السؤال", ecR:"استمع إلى الاقتراح", prec:"السابق", suiv:"التالي", themes:"العودة إلى المواضيع", clav:"اختصارات: ← و → للتنقل، Entrée لعرض الاقتراح.", rem:"ملاحظات جلسة التجربة", remH:"دوّن هنا ما هو واضح، وما يزعج، وما ينقص.", tel:"تنزيل الملاحظات", pied:"الأسئلة: القائمة الرسمية لوزارة الداخلية الفرنسية (formation-civique.interieur.gouv.fr). الاقتراحات: للمراجعة فقط، لم تُعتمد." },
+  tr: { kicker:"Çevrimdışı çalışma · deneme sürümü", title:"Medeni bilgi sınavı · Çok yıllık oturma izni (CSP)", lang:"Dil", note:"Bu bir çalışma aracıdır, resmi cevap anahtarı değildir. Öneriler bir eğitmen tarafından doğrulanmalıdır.", avert:"Önerilen çeviri, bir ana dil konuşuru tarafından gözden geçirilmelidir. Sorular Fransızca kalır (resmi liste).", prog:"İlerleme", parc:"incelendi", reset:"İlerlemeyi sıfırla", resetQ:"Bu cihazdaki ilerleme silinsin mi?", voir:"Öneriyi göster", prop:"Doğrulanacak öneri", conf:"Bir eğitmen tarafından doğrulanmalı", ecQ:"Soruyu dinle", ecR:"Öneriyi dinle", prec:"Önceki", suiv:"Sonraki", themes:"Konulara dön", clav:"Kısayollar: ← ve → gezinmek için, Enter öneriyi görmek için.", rem:"Deneme oturumu notları", remH:"Neyin açık olduğunu, neyin zorlandığını, neyin eksik olduğunu buraya yazın.", tel:"Notları indir", pied:"Sorular: İçişleri Bakanlığı'nın resmi listesi (formation-civique.interieur.gouv.fr). Öneriler: çalışma amaçlı, onaylanmamış." },
+  uk: { kicker:"Робота без інтернету · тестова версія", title:"Громадянський іспит · Посвідка на проживання (CSP)", lang:"Мова", note:"Це інструмент для повторення, а не офіційна відповідь. Пропозиції має перевірити викладач.", avert:"Запропонований переклад, його має перевірити носій мови. Питання залишаються французькою (офіційний список).", prog:"Прогрес", parc:"переглянуто", reset:"Скинути прогрес", resetQ:"Стерти прогрес цього повторення на цьому пристрої?", voir:"Показати пропозицію", prop:"Пропозиція для перевірки", conf:"Підтвердити викладачу", ecQ:"Слухати питання", ecR:"Слухати пропозицію", prec:"Попереднє", suiv:"Наступне", themes:"До тем", clav:"Клавіші: ← і → для переходу, Enter щоб побачити пропозицію.", rem:"Зауваження з тестової сесії", remH:"Запишіть тут, що зрозуміло, що заважає, чого бракує.", tel:"Завантажити зауваження", pied:"Питання: офіційний список Міністерства внутрішніх справ Франції (formation-civique.interieur.gouv.fr). Пропозиції: для повторення, не затверджені." },
+  sq: { kicker:"Rishikim pa internet · version provë", title:"Provimi civik · Leje qëndrimi shumëvjeçare (CSP)", lang:"Gjuha", note:"Ky është një mjet rishikimi, jo një përgjigje zyrtare. Propozimet duhet të verifikohen nga një trajner.", avert:"Përkthim i propozuar, duhet të rishikohet nga një folës amtar. Pyetjet mbeten në frëngjisht (lista zyrtare).", prog:"Progresi", parc:"të parashikuara", reset:"Rivendos progresin", resetQ:"Të fshihet progresi i kësaj rishikimi në këtë pajisje?", voir:"Shiko propozimin", prop:"Propozim për t'u verifikuar", conf:"Për t'u konfirmuar nga trajneri", ecQ:"Dëgjo pyetjen", ecR:"Dëgjo propozimin", prec:"Mbrapa", suiv:"Para", themes:"Kthehu te temat", clav:"Shkurtesa: ← dhe → për të lëvizur, Enter për të parë propozimin.", rem:"Shënime nga seanca e provës", remH:"Shkruani këtu çfarë është e qartë, çfarë pengon, çfarë mungon.", tel:"Shkarko shënimet", pied:"Pyetjet: lista zyrtare e Ministrisë së Brendshme franceze (formation-civique.interieur.gouv.fr). Propozimet: për rishikim, të pa miratuara." },
+  ka: { kicker:"ოფლაინ მიმოხილვა · სატესტო ვერსია", title:"სამოქალაქო გამოცდა · ხანგრძლივი ბინადრობის ბარათი (CSP)", lang:"ენა", note:"ეს სასწავლო ინსტრუმენტია და არა ოფიციალური პასუხები. შეთავაზებები ტრენერმა უნდა შეამოწმოს.", avert:"შემოთავაზებული თარგმანი, უნდა გადაამოწმოს მშობლიურმა ენის მცოდნემ. კითხვები ფრანგულად რჩება (ოფიციალური სია).", prog:"პროგრესი", parc:"ნანახი", reset:"პროგრესის გასუფთავება", resetQ:"წაიშალოს ამ მოწყობილობაზე შენახული პროგრესი?", voir:"წინადადების ნახვა", prop:"შესამოწმებელი წინადადება", conf:"დასადასტურებელია ტრენერის მიერ", ecQ:"კითხვის მოსმენა", ecR:"წინადადების მოსმენა", prec:"წინა", suiv:"შემდეგი", themes:"თემებზე დაბრუნება", clav:"კლავიშები: ← და → გადასასვლელად, Enter წინადადების სანახავად.", rem:"ტესტის სესიის შენიშვნები", remH:"ჩაწერეთ აქ, რა არის გასაგები, რა ართულებს, რა აკლია.", tel:"შენიშვნების ჩამოტვირთვა", pied:"კითხვები: შინაგან საქმეთა სამინისტროს ოფიციალური სია (formation-civique.interieur.gouv.fr). წინადადებები: სასწავლოდ, დაუმტკიცებელი." },
+  ps: { kicker:"د انټرنیټ پرته تمرین · د ازمویښت نسخه", title:"مدني ازموینه · د اوږدمهاله اوسیدو کارت (CSP)", lang:"ژبه", note:"دا د تمرین وسیله ده، رسمي ځوابونه نه دي. وړاندیزونه باید د روزونکي لخوا وڅیړل شي.", avert:"وړاندیز شوې ژباړه، باید د یوې مورنۍ ژبې وینا کوونکي لخوا وڅیړل شي. پوښتنې په فرانسوي پاتې کیږي (رسمي لیست).", prog:"پرمختګ", parc:"کتل شوي", reset:"پرمختګ بیا تنظیم کړئ", resetQ:"د دې وسیلې پرمختګ پاکه شي؟", voir:"وړاندیز وښایاست", prop:"د تأیید لپاره وړاندیز", conf:"د روزونکي لخوا تایید شي", ecQ:"پوښتنه واورئ", ecR:"وړاندیز واورئ", prec:"شاته", suiv:"مخته", themes:"موضوعاتو ته ستنیدل", clav:"کیلي: ← او → د حرکت لپاره، Enter د وړاندیز لیدو لپاره.", rem:"د ازموینې ناستې یادښتونه", remH:"دلته ولیکئ څه روښانه دي، څه ستونزه ده، څه نیم‌کم دي.", tel:"یادښتونه ښکته کړئ", pied:"پوښتنې: د فرانسې د کورنیو چارو وزارت رسمي لیست (formation-civique.interieur.gouv.fr). وړاندیزونه: د تمرین لپاره، نه تایید شوي." },
+  fa: { kicker:"مرور بدون اینترنت · نسخه آزمایشی", title:"امتحان مدنی · کارت اقامت چندساله (CSP)", lang:"زبان", note:"این ابزار مرور است، نه پاسخ رسمی. پیشنهادها باید توسط مربی بررسی شوند.", avert:"ترجمه پیشنهادی، باید توسط یک گوینده بومی بررسی شود. پرسش‌ها به فرانسوی می‌مانند (فهرست رسمی).", prog:"پیشرفت", parc:"مرور شده", reset:"بازنشانی پیشرفت", resetQ:"پیشرفت این مرور در این دستگاه پاک شود؟", voir:"نمایش پیشنهاد", prop:"پیشنهاد برای بررسی", conf:"باید توسط مربی تأیید شود", ecQ:"گوش دادن به سوال", ecR:"گوش دادن به پیشنهاد", prec:"قبلی", suiv:"بعدی", themes:"بازگشت به موضوع‌ها", clav:"کلیدها: ← و → برای حرکت، Enter برای دیدن پیشنهاد.", rem:"یادداشت‌های جلسه آزمایشی", remH:"اینجا بنویسید چه چیزی روشن است، چه چیزی مشکل دارد، چه چیزی کم است.", tel:"دانلود یادداشت‌ها", pied:"پرسش‌ها: فهرست رسمی وزارت کشور فرانسه (formation-civique.interieur.gouv.fr). پیشنهادها: برای مرور، تأیید نشده." },
+  ru: { kicker:"Офлайн-повторение · тестовая версия", title:"Гражданский экзамен · Многолетний вид на жительство (CSP)", lang:"Язык", note:"Это инструмент для повторения, а не официальный ответ. Предложения должен проверить преподаватель.", avert:"Предлагаемый перевод, его должен проверить носитель языка. Вопросы остаются на французском (официальный список).", prog:"Прогресс", parc:"просмотрено", reset:"Сбросить прогресс", resetQ:"Стереть прогресс этого повторения на этом устройстве?", voir:"Показать предложение", prop:"Предложение для проверки", conf:"Подтвердить преподавателю", ecQ:"Прослушать вопрос", ecR:"Прослушать предложение", prec:"Назад", suiv:"Далее", themes:"К темам", clav:"Клавиши: ← и → для перехода, Enter для показа предложения.", rem:"Заметки с тестовой сессии", remH:"Запишите здесь, что понятно, что мешает, чего не хватает.", tel:"Скачать заметки", pied:"Вопросы: официальный список Министерства внутренних дел Франции (formation-civique.interieur.gouv.fr). Предложения: для повторения, не утверждены." },
+  en: { kicker:"Offline revision · test version", title:"Civic exam · Multi-year residence permit (CSP)", lang:"Language", note:"Revision tool, not an official answer key. Suggested answers must be checked by a trainer.", avert:"Proposed translation, to be checked by a native speaker. Questions remain in French (official list).", prog:"Progress", parc:"reviewed", reset:"Reset progress", resetQ:"Clear the progress of this revision on this device?", voir:"Show suggested answer", prop:"Suggested answer to check", conf:"To be confirmed by a trainer", ecQ:"Listen to the question", ecR:"Listen to the answer", prec:"Previous", suiv:"Next", themes:"Back to themes", clav:"Shortcuts: ← and → to move, Enter to show the answer.", rem:"Notes from the test session", remH:"Write here what is clear, what is difficult, what is missing.", tel:"Download notes", pied:"Questions: official list published by the French Ministry of the Interior (formation-civique.interieur.gouv.fr). Suggested answers: for revision only, not validated." },
+  ta: { kicker:"இணையமின்றி மறுபார்வை · சோதனை பதிப்பு", title:"குடியுரிமைத் தேர்வு · பல ஆண்டு வதிவிட அட்டை (CSP)", lang:"மொழி", note:"இது மறுபார்வைக் கருவி; அதிகாரபூர்வ விடைகள் அல்ல. பரிந்துரைகளைப் பயிற்சியாளர் சரிபார்க்க வேண்டும்.", avert:"முன்மொழியப்பட்ட மொழிபெயர்ப்பு, தாய்மொழி பேசுபவர் சரிபார்க்க வேண்டும். கேள்விகள் பிரெஞ்சில் உள்ளன (அதிகாரபூர்வ பட்டியல்).", prog:"முன்னேற்றம்", parc:"பார்க்கப்பட்டது", reset:"முன்னேற்றத்தை மீட்டமை", resetQ:"இந்தச் சாதனத்தில் இந்த மறுபார்வையின் முன்னேற்றத்தை அழிக்கவா?", voir:"பரிந்துரையைக் காட்டு", prop:"சரிபார்க்க வேண்டிய பரிந்துரை", conf:"பயிற்சியாளர் உறுதிசெய்ய வேண்டும்", ecQ:"கேள்வியைக் கேள்", ecR:"பரிந்துரையைக் கேள்", prec:"முந்தையது", suiv:"அடுத்தது", themes:"தலைப்புகளுக்குத் திரும்பு", clav:"குறுக்குவழிகள்: நகர ← மற்றும் →, பரிந்துரையைக் காண Enter.", rem:"சோதனை அமர்வின் குறிப்புகள்", remH:"தெளிவானவை, சிரமமானவை, விடுபட்டவை எதுவென இங்கே எழுதுங்கள்.", tel:"குறிப்புகளைப் பதிவிறக்கு", pied:"கேள்விகள்: பிரெஞ்சு உள்துறை அமைச்சகத்தின் அதிகாரபூர்வ பட்டியல் (formation-civique.interieur.gouv.fr). பரிந்துரைகள்: மறுபார்வைக்கு மட்டும், சரிபார்க்கப்படவில்லை." }
+};
+const RTL = ['ar','ps','fa'];
+
+let lang = 'fr';
+try { const l = localStorage.getItem('examen-civique-lang'); if (l && I[l]) lang = l; } catch (e) {}
+const T = () => I[lang];
+
+const CLE = 'examen-civique-csp-revision-v2';
+let progress = {};
+try { progress = JSON.parse(localStorage.getItem(CLE) || '{}') || {}; } catch (e) { progress = {}; }
+const sauve = () => { try { localStorage.setItem(CLE, JSON.stringify(progress)); } catch (e) {} };
+const app = document.getElementById('app');
+const audioOk = ('speechSynthesis' in window) && ('SpeechSynthesisUtterance' in window);
+let theme = null, index = 0, montre = false;
+
+function lire(texte) {
+  if (!audioOk) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(texte).replace(/<[^>]+>/g, ' '));
+    u.lang = 'fr-FR'; u.rate = 0.9;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+
+const total = () => DATA.reduce((n, t) => n + t.questions.length, 0);
+const vuesDe = t => t.questions.filter((q, j) => progress[t.id + '-' + j] && progress[t.id + '-' + j].vue).length;
+const pourcent = (a, b) => b ? Math.round(100 * a / b) : 0;
+const firstNonVue = t => { for (let j = 0; j < t.questions.length; j++) if (!(progress[t.id + '-' + j] && progress[t.id + '-' + j].vue)) return j; return 0; };
+
+function appliqueStatique() {
+  const x = T();
+  document.documentElement.lang = lang;
+  document.documentElement.dir = RTL.includes(lang) ? 'rtl' : 'ltr';
+  document.getElementById('t-kicker').textContent = x.kicker;
+  document.getElementById('t-title').textContent = x.title;
+  document.getElementById('t-lang').textContent = x.lang;
+  document.getElementById('t-note').textContent = x.note;
+  const av = document.getElementById('t-avert');
+  if (lang === 'fr') av.style.display = 'none'; else { av.style.display = ''; av.textContent = x.avert; }
+  document.getElementById('t-rem').textContent = x.rem;
+  document.getElementById('remarques').placeholder = x.remH;
+  document.getElementById('t-tel').textContent = x.tel;
+  document.getElementById('t-pied').textContent = x.pied;
+  document.getElementById('lang').value = lang;
+}
+
+function accueil() {
+  theme = null;
+  const x = T(), tot = total();
+  const vues = DATA.reduce((n, t) => n + vuesDe(t), 0);
+  let html = `<div class="card">
+    <h2>${x.prog}</h2>
+    <div class="gris">${vues} / ${tot} ${x.parc}</div>
+    <div class="barre"><div style="width:${pourcent(vues, tot)}%"></div></div>
+    <div class="nav" style="margin-top:12px">
+      <span></span>
+      <button class="btn discret" id="reinit">${x.reset}</button>
+    </div>
+  </div>`;
+  DATA.forEach((t, i) => {
+    const f = vuesDe(t);
+    html += `<button class="theme" data-theme="${i}">
+      <span><span class="titre">${t.titre}</span><span class="sous">${f} / ${t.questions.length} ${x.parc}</span>
+      <span class="barre" style="display:block;width:220px;max-width:100%"><span style="display:block;height:100%;background:var(--vert);width:${pourcent(f, t.questions.length)}%"></span></span></span>
+      <span aria-hidden="true" style="color:var(--bleu);font-size:22px">›</span>
+    </button>`;
+  });
+  app.innerHTML = html;
+  app.querySelectorAll('[data-theme]').forEach(b => b.onclick = () => { theme = +b.dataset.theme; index = firstNonVue(DATA[theme]); montre = false; affiche(); });
+  document.getElementById('reinit').onclick = () => { if (confirm(x.resetQ)) { progress = {}; sauve(); accueil(); } };
+  document.onkeydown = null;
+}
+
+function affiche() {
+  const x = T();
+  const t = DATA[theme], q = t.questions[index], n = t.questions.length, cle = t.id + '-' + index;
+  let html = `<div class="card">
+    <div class="repere">${t.titre} · ${index + 1} / ${n}</div>
+    <div class="barre" style="margin-top:0"><div style="width:${pourcent(index + 1, n)}%"></div></div>
+    <div class="question" style="margin-top:14px">${q.q}</div>`;
+  if (!montre) {
+    html += `<button class="btn" id="montrer"><span class="picto" aria-hidden="true">👁️</span>${x.voir}</button>` + (audioOk ? ` <button class="btn audio" id="ecoute-q"><span class="picto" aria-hidden="true">🔊</span>${x.ecQ}</button>` : '');
+  } else {
+    html += `<div class="reponse"><div class="label">${x.prop}</div>${q.r}` + (q.incertain ? `<br><span class="alerte">${x.conf}</span>` : '') + (audioOk ? `<br><button class="btn audio" id="ecoute-r" style="margin:10px 0 0"><span class="picto" aria-hidden="true">🔊</span>${x.ecR}</button>` : '') + `</div>`;
+  }
+  html += `</div>
+  <div class="nav">
+    <div>
+      <button class="btn sec" id="prec" ${index === 0 ? 'disabled' : ''}><span class="picto" aria-hidden="true">⬅️</span>${x.prec}</button>
+      <button class="btn sec" id="suiv" ${index >= n - 1 ? 'disabled' : ''}>${x.suiv}<span class="picto" aria-hidden="true" style="margin-inline-start:6px">➡️</span></button>
+    </div>
+    <button class="btn discret" id="themes"><span class="picto" aria-hidden="true">🏠</span>${x.themes}</button>
+  </div>
+  <div class="clavier">${x.clav}</div>`;
+  app.innerHTML = html;
+  const aller = d => { const k = index + d; if (k >= 0 && k < n) { index = k; montre = false; affiche(); } };
+  const voir = () => { montre = true; progress[cle] = { vue: true }; sauve(); affiche(); };
+  const m = document.getElementById('montrer'); if (m) m.onclick = voir;
+  const eq = document.getElementById('ecoute-q'); if (eq) eq.onclick = () => lire(q.q);
+  const er = document.getElementById('ecoute-r'); if (er) er.onclick = () => lire(q.r);
+  document.getElementById('prec').onclick = () => aller(-1);
+  document.getElementById('suiv').onclick = () => aller(1);
+  document.getElementById('themes').onclick = accueil;
+  window.scrollTo(0, 0);
+  document.onkeydown = e => {
+    if (theme === null) return;
+    if (e.key === 'ArrowLeft') aller(RTL.includes(lang) ? 1 : -1);
+    else if (e.key === 'ArrowRight') aller(RTL.includes(lang) ? -1 : 1);
+    else if (e.key === 'Enter' && !montre) voir();
+  };
+}
+
+document.getElementById('lang').onchange = e => {
+  lang = e.target.value;
+  try { localStorage.setItem('examen-civique-lang', lang); } catch (err) {}
+  appliqueStatique();
+  if (theme === null) accueil(); else affiche();
+};
+
+const zone = document.getElementById('remarques');
+try { zone.value = localStorage.getItem(CLE + '-remarques') || ''; } catch (e) {}
+zone.addEventListener('input', () => { try { localStorage.setItem(CLE + '-remarques', zone.value); } catch (e) {} });
+document.getElementById('telecharger').onclick = () => {
+  const date = new Date().toISOString().slice(0, 16).replace('T', ' ');
+  const texte = 'Remarques de test - examen civique CSP (révision)\nLangue de l\'interface : ' + lang + '\nDate : ' + date + '\n\n' + (zone.value || '(aucune remarque)') + '\n';
+  const url = URL.createObjectURL(new Blob([texte], { type: 'text/plain;charset=utf-8' }));
+  const a = document.createElement('a'); a.href = url; a.download = 'remarques-test-civique.txt';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+};
+
+appliqueStatique();
+accueil();
+</script>
+</body>
+</html>
